@@ -1,58 +1,161 @@
-
-
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset=utf-8 />
-  <title></title>
-  <script src='https://api.mapbox.com/mapbox.js/v3.0.1/mapbox.js'></script>
-  <link href='https://api.mapbox.com/mapbox.js/v3.0.1/mapbox.css' rel='stylesheet' />
-  <style>
-    body { margin:0; padding:0; }
-    .map { position:absolute; top:0; bottom:0; width:100%; }
-  </style>
+    <meta charset='utf-8' />
+    <title></title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.33.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.33.1/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+    </style>
 </head>
 <body>
-<div id='map-tooltips' class='map'> </div>
-<script>
-L.mapbox.accessToken = 'pk.eyJ1Ijoic3RpbnNvbm1hcCIsImEiOiJjaWl1Z2ZybDQwMDFndXNsenloZ3pob2I1In0.ivqvDugfdV0-VzQKjTpL0g';
-var mapTooltips = L.mapbox.map('map-tooltips', 'mapbox.light')
-  .setView([37.8, -96], 4);
-var myLayer = L.mapbox.featureLayer().addTo(mapTooltips);
 
-var geojson = [
-  {
-    type: 'Feature',
-    geometry: {
-      type: 'Point',
-      coordinates: [-91.189359,30.445645]
-    },
-    properties: {
-      title: 'Mapbox DC',
-      description: '1714 14th St NW, Washington DC',
-      'marker-color': '#3ca0d3',
-      'marker-size': 'large',
-      'marker-symbol': 'rocket'
+<style>
+    .mapboxgl-popup {
+        max-width: 400px;
+        font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
     }
-  },
-  {
-    type: 'Feature',
-    geometry: {
-      type: 'Point',
-      coordinates: [-91.190389, 30.446501]
-    },
-    properties: {
-      title: 'Mapbox SF',
-      description: '155 9th St, San Francisco',
-      'marker-color': '#63b6e5',
-      'marker-size': 'large',
-      'marker-symbol': 'rocket'
+</style>
+<div id='map'></div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiZGlhdG9tZGVzaWduIiwiYSI6ImNqMGp2OTFzdDAyMXQzM28zb3Q4Y2x5MGkifQ.8X1rgyXS9WlnyoQJ8Miezg';
+
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/diatomdesign/cj0mihu9c001h2snshadgmu0o',
+    center: [-91.189883,30.445340],
+    zoom: 16.95
+});
+
+map.on('load', function () {
+
+    // Add a layer showing the places.
+    map.addLayer({
+        "id": "places",
+        "type": "symbol",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "FeatureCollection",
+                "features": [{
+                    "type": "Feature",
+                    "properties": {
+                        "description": "<strong>Old State Capitol</strong><p>High Voltage</p>",
+                        "icon": "circle"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [-91.189025, 30.446713]
+                    }
+                }, {
+                    "type": "Feature",
+                    "properties": {
+                        "description": "<strong>iHeart Radio Stage</strong><p>Cameo • Tab Benoit • Sweet Tea • Dee-1 • The Easy • Dikki Du and Zydeco Krewe • Humble Kind • Nigel Hall Band • Your Mom • Minos The Saint</p>",
+                        "icon": "circle"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [-91.189617,30.445615]
+                    }
+                }, {
+                    "type": "Feature",
+                    "properties": {
+                        "description": "<strong>Sculpture Garden</strong><p>In partnership with Glassell Gallery and LSU School of Art, Ebb and Flow will present an exhibition of BORDERS, a series of 22 iron and aluminum figural sculptures by Icelandic artist Steinunn Thórarinsdóttir. The sculptures will appear on the walking path along the levee and will remain on the grounds for the next year.</p>",
+                        "icon": "circle"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [-91.190704, 30.445339]
+                    }
+                }, {
+                    "type": "Feature",
+                    "properties": {
+                        "description": "<strong>Country Roads Makers Row</strong><p>This space will include the Arts Marketplace with artists juried in from all over the country, as well as local and regional artists and crafts makers who will engage festival goers with demonstrations and workshops throughout the weekend, including Wonder South Makers Lab, BRCC Arts Fest, West Baton Rouge Museum, Traditions: Folk Art & Folk Life.</p>",
+                        "icon": "circle"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [-91.190121, 30.446409]
+                    }
+                }, {
+                    "type": "Feature",
+                    "properties": {
+                        "description": "<strong>Entergy River Stage</strong><p>Barry Hebert • Kaycee Kersch • Michael Rayburn of Burnhouse • Chenoa Farrell and Bryan McVicker • Ray Stumbo • Opera Louisiane • kristofer hill • Tony Cobb • Greg Schroeder • J.M. Fritz • Constantinides Ensemble</p>",
+                        "icon": "circle"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [-91.191305, 30.445312]
+                    }
+                }, {
+                    "type": "Feature",
+                    "properties": {
+                        "description": "<strong>Cox International Stage</strong><p> Smithfield Fair • N’fungola African Dance Company • Kristofer Hill • Bloco Jacare • Mariachi Jalisco Us •  The Hot Club Of Baton Rouge Gypsy Jazz • Rosehill Baptist Church • Magnolia Strings • Toast</p>",
+                        "icon": "circle"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [-91.190442, 30.444759]
+                    }
+                }, {
+                    "type": "Feature",
+                    "properties": {
+                        "description": "<strong>Food Vendors</strong><p>There will be food, we promise... More information coming soon.</p>",
+                        "icon": "circle"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [-91.190076, 30.444782]
+                    }
+                },  {
+                    "type": "Feature",
+                    "properties": {
+                        "description": "<strong>Kidd's Corner</strong><p>The hub of activities and entertainment specifically for our younger festivalgoers. The Kidd’s Corner, sponsored by the Junior League of Baton Rouge, will be overflowing with performances and activities by LSU Museum of Art, Playmakers of Baton Rouge and more.</p>",
+                        "icon": "circle"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [-91.190269, 30.443878]
+                    }
+                }]
+            }
+        },
+        "layout": {
+            "icon-image": "{icon}-11",
+            "icon-allow-overlap": true        }
+    });
+});
+
+
+// Create a popup, but don't add it to the map yet.
+var popup = new mapboxgl.Popup({
+    closeButton: false,
+    closeOnClick: false
+});
+
+map.on('mousemove', function(e) {
+    var features = map.queryRenderedFeatures(e.point, { layers: ['places'] });
+    // Change the cursor style as a UI indicator.
+    map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
+
+    if (!features.length) {
+        popup.remove();
+        return;
     }
-  }
-];
-myLayer.setGeoJSON(geojson);
-mapTooltips.scrollWheelZoom.disable();
+
+    var feature = features[0];
+
+    // Populate the popup and set its coordinates
+    // based on the feature found.
+    popup.setLngLat(feature.geometry.coordinates)
+        .setHTML(feature.properties.description)
+        .addTo(map);
+});
 </script>
+
+
 </body>
 </html>
-
